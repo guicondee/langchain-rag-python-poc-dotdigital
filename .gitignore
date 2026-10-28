@@ -4,3 +4,6 @@ __pycache__/
 .pytest_cache/
 biblioteca.db
 .env
+.smart-commit-context.md
+smart_commit.py
+COMMIT_GUIDE.md
