@@ -1,8 +1,8 @@
 # langchain-rag-python-poc-dotdigital
 
-Prova de backend com foco em IA. Esta etapa entrega a **Questão 1**: uma API para cadastrar e consultar livros.
+Prova de backend com foco em IA. Esta entrega cobre a **Questão 1** (livros) e a **Questão 2** (chat sobre Python).
 
-O chat (Questão 2) e a busca semântica (Questão 3) entram nas próximas etapas.
+A busca semântica (Questão 3) entra na próxima etapa.
 
 ## Como rodar
 
@@ -34,6 +34,7 @@ Os livros são gravados no arquivo `biblioteca.db`, na raiz do projeto. Esse arq
 | `POST` | `/livros` | Cadastra um livro |
 | `GET` | `/livros` | Lista os livros. Filtros opcionais: `titulo` e `autor` |
 | `GET` | `/livros/{id}` | Consulta um livro pelo id |
+| `POST` | `/chat` | Responde uma pergunta sobre Python |
 
 A busca por título e autor encontra um trecho do texto e não diferencia maiúsculas de minúsculas.
 
@@ -52,6 +53,30 @@ curl "http://127.0.0.1:8000/livros?titulo=python"
 curl "http://127.0.0.1:8000/livros?autor=ramalho"
 curl http://127.0.0.1:8000/livros/1
 ```
+
+## Chat (Questão 2)
+
+A chave da OpenAI fica no arquivo `.env`, que não vai para o git. Copie o exemplo e preencha a sua chave:
+
+```bash
+cp .env.example .env
+```
+
+Pelo servidor:
+
+```bash
+curl -X POST http://127.0.0.1:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Como criar uma lista em Python?"}'
+```
+
+Sem subir o servidor:
+
+```bash
+python scripts/example_chat.py
+```
+
+Cada chamada envia só a pergunta atual. O chat não guarda a conversa.
 
 ## Testes
 
