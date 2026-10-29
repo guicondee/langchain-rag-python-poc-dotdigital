@@ -1,8 +1,6 @@
 # langchain-rag-python-poc-dotdigital
 
-Prova de backend com foco em IA. Esta entrega cobre a **Questão 1** (livros) e a **Questão 2** (chat sobre Python).
-
-A busca semântica (Questão 3) entra na próxima etapa.
+Prova de backend com foco em IA. Esta entrega cobre as três questões: livros, chat sobre Python e busca semântica.
 
 ## Como rodar
 
@@ -35,6 +33,7 @@ Os livros são gravados no arquivo `biblioteca.db`, na raiz do projeto. Esse arq
 | `GET` | `/livros` | Lista os livros. Filtros opcionais: `titulo` e `autor` |
 | `GET` | `/livros/{id}` | Consulta um livro pelo id |
 | `POST` | `/chat` | Responde uma pergunta sobre Python |
+| `POST` | `/busca` | Busca trechos pelo sentido da consulta |
 
 A busca por título e autor encontra um trecho do texto e não diferencia maiúsculas de minúsculas.
 
@@ -77,6 +76,36 @@ python scripts/example_chat.py
 ```
 
 Cada chamada envia só a pergunta atual. O chat não guarda a conversa.
+
+## Busca semântica (Questão 3)
+
+Os textos ficam em `data/documentos/`. O script abaixo corta esses textos, pede os embeddings para a OpenAI (`text-embedding-3-small`, a mesma chave do chat) e grava o índice FAISS em `data/faiss/`. Esse índice não vai para o git.
+
+```bash
+python scripts/ingest.py
+```
+
+Consulta:
+
+```bash
+curl -X POST http://127.0.0.1:8000/busca \
+  -H "Content-Type: application/json" \
+  -d '{"query":"como criar uma lista"}'
+```
+
+A resposta traz os trechos mais parecidos, o arquivo de origem e a distância. Quanto menor o `score`, mais próximo o trecho está da consulta.
+
+```json
+{
+  "results": [
+    {
+      "content": "Uma lista em Python guarda vários valores em ordem...",
+      "source": "listas.txt",
+      "score": 0.42
+    }
+  ]
+}
+```
 
 ## Testes
 
