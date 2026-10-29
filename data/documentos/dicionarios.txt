@@ -1,0 +1,28 @@
+Dicionário em Python
+
+Um dicionário guarda pares de chave e valor. A busca pela chave é direta, sem percorrer todos os itens como numa lista. A forma literal usa chaves. O dicionário vazio é {}.
+
+pessoa = {"nome": "Ana", "idade": 30}
+
+pessoa["nome"] devolve "Ana". Se a chave não existe, esse acesso levanta KeyError. get devolve o valor ou um padrão quando a chave falta: pessoa.get("cidade", "desconhecida"). in testa a chave, não o valor: "nome" in pessoa é True.
+
+Atribuir a uma chave existente troca o valor. Atribuir a uma chave nova inclui o par. pop remove pela chave e devolve o valor. popitem remove o último par inserido. del pessoa["idade"] remove sem devolver. clear esvazia o dicionário.
+
+A chave precisa ser imutável. Texto, número, tupla de imutáveis e booleano servem. Lista e outro dicionário não servem como chave, porque o hash mudaria se o conteúdo mudasse. O valor pode ser qualquer objeto, inclusive uma lista ou outro dicionário.
+
+Desde o Python 3.7, a ordem de inserção é preservada. Percorrer pessoa devolve as chaves. pessoa.values() devolve os valores. pessoa.items() devolve pares, e é o jeito usual no for.
+
+for chave, valor in pessoa.items():
+    print(chave, valor)
+
+update copia pares de outro dicionário. Chaves repetidas ficam com o valor novo. O operador | junta dois dicionários e devolve um terceiro, sem alterar os originais. |= atualiza o da esquerda.
+
+A compreensão de dicionário transforma uma coleção em pares.
+
+quadrados = {n: n * n for n in range(5)}
+
+setdefault devolve o valor da chave e, se ela não existe, grava o padrão informado. collections.defaultdict faz isso na criação: um defaultdict(list) entrega uma lista nova na primeira vez que a chave aparece. Isso evita o if chave not in dicionario antes de cada append.
+
+Dois nomes para o mesmo dicionário compartilham o objeto. copia = pessoa não duplica. pessoa.copy() faz cópia rasa: o dicionário é novo, mas os valores mutáveis de dentro continuam compartilhados. Para uma estrutura aninhada, copy.deepcopy cria a cópia completa.
+
+Quando a pergunta é "qual o valor desta chave", o dicionário é a estrutura certa. Quando a pergunta é "qual o item nesta posição", a lista é a estrutura certa. Usar uma lista de pares e procurar com um for funciona, mas deixa a busca lenta e o código mais frágil.

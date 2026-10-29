@@ -1,0 +1,28 @@
+Lista em Python
+
+Uma lista guarda valores em ordem e deixa mudar esse conteúdo depois. O tipo é list. A forma literal usa colchetes, e a lista vazia é o ponto de partida de qualquer coleção que ainda vai crescer.
+
+numeros = [10, 20, 30]
+vazia = []
+
+A ordem importa. numeros[0] é 10, numeros[1] é 20 e numeros[-1] é o último item, 30. Um índice fora do tamanho levanta IndexError. O tamanho vem de len(numeros).
+
+A lista é mutável. numeros[0] = 15 troca o primeiro valor sem criar outra lista. append acrescenta no final. insert coloca um item numa posição e empurra o resto para a direita. extend cola os itens de outro iterável, um a um. append de uma lista inteira cria uma lista dentro da lista, e esse é um erro comum.
+
+numeros.append(40)
+numeros.insert(1, 18)
+numeros.extend([50, 60])
+
+Para remover, pop tira pelo índice e devolve o valor. Sem argumento, pop tira o último. remove tira a primeira ocorrência de um valor. Se o valor não existe, remove levanta ValueError. clear esvazia a lista e mantém o mesmo objeto.
+
+Cópia e referência são coisas diferentes. outra = numeros não cria uma lista nova: os dois nomes apontam para o mesmo objeto. Mudar outra muda numeros. A cópia rasa é numeros.copy() ou numeros[:]. Ela duplica a lista, mas os objetos de dentro continuam compartilhados. Se o item for outra lista, alterar esse item interno aparece nas duas cópias. copy.deepcopy resolve quando a estrutura é aninhada.
+
+Percorrer com for entrega cada item. enumerate entrega o índice junto, o que evita o padrão for i in range(len(numeros)). A fatia numeros[1:4] devolve uma lista nova com o intervalo, sem incluir o fim. O passo numeros[::2] pega os itens de duas em duas posições.
+
+A compreensão de lista constrói uma lista a partir de outra num único passo, com filtro opcional.
+
+pares = [n for n in range(10) if n % 2 == 0]
+
+sort ordena no próprio objeto. A função sorted devolve uma lista nova e deixa a original quieta. key escolhe o critério, por exemplo ordenar textos sem diferenciar maiúsculas: palavras.sort(key=str.lower). reverse=True inverte a ordem.
+
+Uma lista aceita tipos misturados, mas uma coleção homogênea é mais fácil de ler e de passar para uma função. Para uma sequência que não deve mudar, a tupla é a estrutura certa. Para busca frequente por chave, o dicionário é melhor do que percorrer a lista inteira com um for.

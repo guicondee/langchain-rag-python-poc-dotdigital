@@ -1,0 +1,35 @@
+Função em Python
+
+Uma função nomeia um bloco de código, recebe argumentos e devolve um resultado. A palavra def cria a função. O corpo fica indentado. A chamada usa o nome seguido de parênteses.
+
+def somar(a, b):
+    return a + b
+
+resultado = somar(2, 3)
+
+return entrega o valor e encerra a função naquela linha. Código escrito depois de um return alcançado não roda. Se não houver return, o resultado da chamada é None. None não é zero e não é string vazia: é a ausência de valor.
+
+Parâmetro é o nome na definição. Argumento é o valor passado na chamada. Um parâmetro pode ter valor padrão, e os parâmetros com padrão vêm depois dos obrigatórios.
+
+def saudar(nome, saudacao="Olá"):
+    return f"{saudacao}, {nome}"
+
+saudar("Ana") usa o padrão. saudar("Ana", saudacao="Bom dia") usa o nome do parâmetro, e a ordem deixa de importar. O valor padrão é calculado uma vez, na definição da função. Usar uma lista ou um dicionário como padrão é um erro clássico: todas as chamadas compartilham o mesmo objeto mutável. O padrão seguro é None, e a função cria a lista por dentro quando o argumento não veio.
+
+def registrar(item, itens=None):
+    if itens is None:
+        itens = []
+    itens.append(item)
+    return itens
+
+*args junta argumentos posicionais extras numa tupla. **kwargs junta argumentos nomeados extras num dicionário. Isso serve para embrulhar outra função sem listar cada parâmetro.
+
+Escopo: um nome criado dentro da função é local. Ele não vaza para fora. A função enxerga variáveis globais, mas atribuir a um nome global exige a declaração global, que é melhor evitar. O habitual é receber o dado por argumento e devolver o resultado.
+
+Função é um objeto. Dá para guardar numa variável, passar como argumento e devolver de outra função. É o que acontece quando sorted recebe key=str.lower. Uma função interna pode usar variáveis da função de fora. Se ela for devolvida, essas variáveis continuam vivas. Isso é um closure.
+
+lambda cria uma função anônima de uma expressão só. Serve para um critério curto. Se a lógica crescer, def com nome é mais legível.
+
+Docstring é o texto logo abaixo do def, entre aspas triplas. help(somar) mostra esse texto. Anotações de tipo, como def somar(a: int, b: int) -> int, documentam a intenção. O Python não bloqueia a chamada se o tipo vier errado. Quem confere é uma ferramenta externa, como o mypy.
+
+Uma função deve fazer uma coisa só e ter um nome que diga o que devolve. Funções longas, que misturam leitura de arquivo, regra e impressão, ficam difíceis de testar.
